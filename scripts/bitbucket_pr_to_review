@@ -1,0 +1,128 @@
+#!/usr/bin/env python3
+"""Fetch a Bitbucket Server pull request and write a review-pr handoff file.
+
+Usage:
+  bitbucket_pr_to_review <PR-ID> [PROJECT REPO]
+
+PROJECT/REPO are inferred from the current directory's git origin remote
+when omitted. Requires BITBUCKET_PR_TOKEN in the environment, set to a
+read-only Bitbucket personal access token. Every API call here is a GET —
+this script never writes to Bitbucket.
+"""
+import json
+import os
+import re
+import subprocess
+import sys
+import urllib.error
+import urllib.request
+
+HOST = "bitbucket.liberty.edu"
+
+
+def git_remote_project_repo():
+    url = subprocess.check_output(["git", "remote", "get-url", "origin"], text=True).strip()
+    m = re.search(r"[:/]([^/]+)/([^/]+?)(\.git)?$", url)
+    if not m:
+        sys.exit(f"Could not parse project/repo from origin remote: {url}")
+    return m.group(1).upper(), m.group(2)
+
+
+def api_get(path):
+    token = os.environ.get("BITBUCKET_PR_TOKEN")
+    if not token:
+        sys.exit("BITBUCKET_PR_TOKEN is not set. Export a read-only Bitbucket personal access token first.")
+    req = urllib.request.Request(
+        f"https://{HOST}/rest/api/1.0{path}",
+        headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+        method="GET",
+    )
+    try:
+        with urllib.request.urlopen(req) as resp:
+            return json.load(resp)
+    except urllib.error.HTTPError as e:
+        sys.exit(f"Bitbucket API error {e.code} for {path}: {e.read().decode(errors='replace')}")
+
+
+def paginated_get(path, limit=100):
+    values, start = [], 0
+    while True:
+        sep = "&" if "?" in path else "?"
+        page = api_get(f"{path}{sep}start={start}&limit={limit}")
+        values.extend(page.get("values", []))
+        if page.get("isLastPage", True):
+            return values
+        start = page.get("nextPageStart", start + limit)
+
+
+def main():
+    args = sys.argv[1:]
+    if len(args) == 3:
+        pr_id, project, repo = args
+    elif len(args) == 1:
+        pr_id = args[0]
+        project, repo = git_remote_project_repo()
+    else:
+        sys.exit("Usage: bitbucket_pr_to_review <PR-ID> [PROJECT REPO]")
+
+    pr = api_get(f"/projects/{project}/repos/{repo}/pull-requests/{pr_id}")
+    activities = paginated_get(f"/projects/{project}/repos/{repo}/pull-requests/{pr_id}/activities")
+
+    comments = []
+    for a in activities:
+        if a.get("action") != "COMMENTED":
+            continue
+        c = a.get("comment") or {}
+        if not c or c.get("state") == "RESOLVED" or c.get("resolved"):
+            continue
+        author = (c.get("author") or {}).get("displayName", "unknown")
+        text = (c.get("text") or "").strip()
+        severity = c.get("severity", "NORMAL")
+        comments.append((author, severity, text))
+
+    title = pr.get("title", "")
+    description = pr.get("description") or "_(no description)_"
+    author = ((pr.get("author") or {}).get("user") or {}).get("displayName", "unknown")
+    from_branch = (pr.get("fromRef") or {}).get("displayId", "")
+    to_branch = (pr.get("toRef") or {}).get("displayId", "")
+    clone_links = (((pr.get("fromRef") or {}).get("repository") or {}).get("links") or {}).get("clone", [])
+    clone_url = next(
+        (l["href"] for l in clone_links if l.get("name") == "ssh"),
+        f"ssh://git@{HOST}:7999/{project.lower()}/{repo}.git",
+    )
+    pr_url = f"https://{HOST}/projects/{project}/repos/{repo}/pull-requests/{pr_id}/overview"
+
+    lines = [
+        f"# PR #{pr_id}: {title}",
+        "",
+        f"- **URL:** {pr_url}",
+        f"- **Author:** {author}",
+        f"- **Source branch:** {from_branch}",
+        f"- **Target branch:** {to_branch}",
+        f"- **Clone URL:** {clone_url}",
+        "",
+        "## Description",
+        "",
+        description,
+        "",
+        "## Existing open comment/task threads",
+        "",
+    ]
+    if comments:
+        for author_name, severity, text in comments:
+            tag = "TASK" if severity == "BLOCKER" else "comment"
+            lines.append(f"- **[{tag}] {author_name}:** {text}")
+    else:
+        lines.append(
+            "_(none found via the API's resolved-state field — spot-check the PR page, "
+            "older Bitbucket Server versions don't always expose this)_"
+        )
+
+    out_name = f"pr-review-handoff-{project}-{repo}-{pr_id}.md"
+    with open(out_name, "w") as f:
+        f.write("\n".join(lines) + "\n")
+    print(out_name)
+
+
+if __name__ == "__main__":
+    main()

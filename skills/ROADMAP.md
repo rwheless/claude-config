@@ -30,7 +30,3 @@ grill-with-docs session. Written 2026-07-02 during the Sonnet-readiness audit.
   Surfaced 2026-07-10 during an ad hoc `plan-with-me-personal` wrap-up on
   astrowatch (cleanup batch), which had to invent this shape from scratch.
 
-## Pending chore
-
-- Decide whether the `bitbucket_pr_to_review` script (currently
-  `~/.local/bin/`) should live in this repo (e.g. under `scripts/`).
