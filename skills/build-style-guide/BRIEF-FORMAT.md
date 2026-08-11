@@ -24,7 +24,7 @@ component-library conversion issues.
 # COMPONENT BRIEF — {app name}
 
 > You are receiving a COMPONENT BRIEF, the output of a build-style-guide
-> session (format: https://raw.githubusercontent.com/cboyd10/claude-config/main/skills/build-style-guide/BRIEF-FORMAT.md).
+> session (format: https://raw.githubusercontent.com/rwheless/claude-config/main/skills/build-style-guide/BRIEF-FORMAT.md).
 > The style guide it derives from is approved — the look is settled; do not
 > re-litigate it. This is planning input: slice, estimate, and label the
 > conversion work per your planning flow's own rules.

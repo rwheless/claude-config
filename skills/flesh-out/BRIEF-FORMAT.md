@@ -23,7 +23,7 @@ no consumer is edited to expect it.
 # IDEA BRIEF — {short idea name}
 
 > You are receiving an IDEA BRIEF, the output of a flesh-out ideation session
-> (format: https://raw.githubusercontent.com/cboyd10/claude-config/main/skills/flesh-out/BRIEF-FORMAT.md).
+> (format: https://raw.githubusercontent.com/rwheless/claude-config/main/skills/flesh-out/BRIEF-FORMAT.md).
 > Decisions below are settled — do not re-litigate them; resolve Open questions
 > first. To materialize: create each `===== FILE: path =====` section as a real
 > file at that path in the new repo, verbatim.

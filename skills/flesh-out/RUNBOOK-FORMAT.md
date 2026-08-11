@@ -28,7 +28,7 @@ artifacts — only the back half differs.
 # RUNBOOK — {short goal name}
 
 > You are reading a RUNBOOK, the output of a flesh-out ideation session
-> (format: https://raw.githubusercontent.com/cboyd10/claude-config/main/skills/flesh-out/RUNBOOK-FORMAT.md).
+> (format: https://raw.githubusercontent.com/rwheless/claude-config/main/skills/flesh-out/RUNBOOK-FORMAT.md).
 > Work the steps in order; do not continue past a failed Verify. Decisions
 > below are settled — a future Claude session helping with this runbook should
 > resolve Open questions first, not re-litigate decisions.

@@ -12,7 +12,7 @@ Public version-controlled Claude Code configuration: custom skills and shell scr
 Clone and symlink into `~/.claude/`:
 
 ```bash
-git clone git@github.com:cboyd10/claude-config.git <your-path>
+git clone git@github.com:rwheless/claude-config.git <your-path>
 cd <your-path>
 
 # Replace the local directories with symlinks
