@@ -68,17 +68,25 @@ def main():
     pr = api_get(f"/projects/{project}/repos/{repo}/pull-requests/{pr_id}")
     activities = paginated_get(f"/projects/{project}/repos/{repo}/pull-requests/{pr_id}/activities")
 
+    def collect_comment(c, out, depth=0):
+        if not c:
+            return
+        if not (c.get("state") == "RESOLVED" or c.get("resolved")):
+            author = (c.get("author") or {}).get("displayName", "unknown")
+            text = (c.get("text") or "").strip()
+            severity = c.get("severity", "NORMAL")
+            out.append((author, severity, text, depth))
+        # Bitbucket Server nests replies inside the parent comment's own
+        # "comments" array rather than always surfacing them as independent
+        # activities — walk them so replies aren't silently dropped.
+        for reply in c.get("comments") or []:
+            collect_comment(reply, out, depth + 1)
+
     comments = []
     for a in activities:
         if a.get("action") != "COMMENTED":
             continue
-        c = a.get("comment") or {}
-        if not c or c.get("state") == "RESOLVED" or c.get("resolved"):
-            continue
-        author = (c.get("author") or {}).get("displayName", "unknown")
-        text = (c.get("text") or "").strip()
-        severity = c.get("severity", "NORMAL")
-        comments.append((author, severity, text))
+        collect_comment(a.get("comment") or {}, comments)
 
     title = pr.get("title", "")
     description = pr.get("description") or "_(no description)_"
@@ -109,9 +117,10 @@ def main():
         "",
     ]
     if comments:
-        for author_name, severity, text in comments:
+        for author_name, severity, text, depth in comments:
             tag = "TASK" if severity == "BLOCKER" else "comment"
-            lines.append(f"- **[{tag}] {author_name}:** {text}")
+            prefix = "  " * depth + ("↳ " if depth else "")
+            lines.append(f"- {prefix}**[{tag}] {author_name}:** {text}")
     else:
         lines.append(
             "_(none found via the API's resolved-state field — spot-check the PR page, "
