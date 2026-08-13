@@ -10,6 +10,13 @@ You are picking up a Jira issue for implementation. Input is everything after
 the first whitespace-delimited uppercase token (e.g. `LNES-129`); treat the rest as
 the issue summary and description.
 
+If what follows the slug reads like a short title or paraphrase rather than the
+full issue (no acceptance criteria, no detail beyond a sentence), ask the user to
+paste the actual Jira issue description before exploring or grilling — a short
+paraphrase can omit scope-defining details (e.g. which specific components/entities
+are named) that would otherwise only surface after significant grilling has already
+happened.
+
 ## Workflow
 
 Run these phases strictly in order. Do not create a worktree or write any code until
@@ -142,7 +149,11 @@ run by you:
    Skill tool) at medium effort against the branch diff
    (`git diff {base-branch}...HEAD`, using the local base branch — same reasoning
    as Phase 4's `FETCH_HEAD` approach). If the bundled skill is unavailable in this
-   environment, do a manual correctness pass over the same diff instead.
+   environment, do a manual correctness pass over the same diff instead. Check the
+   available-skills list for an entry literally named `code-review` before invoking
+   it. If it is not listed, do not substitute a differently-scoped skill (e.g.
+   `simplify`, which reviews quality only, not correctness) — go straight to the
+   manual correctness pass.
 2. Triage the findings:
    - **Confirmed correctness bugs** — fix now. When the fix touches Angular or
      Spring Boot production code, go through `tdd` (failing test first); re-run
