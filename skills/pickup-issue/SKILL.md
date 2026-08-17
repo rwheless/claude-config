@@ -148,12 +148,15 @@ run by you:
 1. From the worktree, invoke Claude Code's bundled `code-review` skill (via the
    Skill tool) at medium effort against the branch diff
    (`git diff {base-branch}...HEAD`, using the local base branch — same reasoning
-   as Phase 4's `FETCH_HEAD` approach). If the bundled skill is unavailable in this
-   environment, do a manual correctness pass over the same diff instead. Check the
-   available-skills list for an entry literally named `code-review` before invoking
-   it. If it is not listed, do not substitute a differently-scoped skill (e.g.
-   `simplify`, which reviews quality only, not correctness) — go straight to the
-   manual correctness pass.
+   as Phase 4's `FETCH_HEAD` approach). Check the available-skills list for an
+   entry literally named `code-review` before invoking it. If it is not listed, do
+   not substitute a differently-scoped skill (e.g. `simplify`, which reviews
+   quality only, not correctness) — go straight to the manual correctness pass.
+   `code-review` is a plugin slash command, not a Skill-tool-invocable skill, so
+   this Skill-tool call is expected to fail every time; the manual correctness
+   pass is the normal path here, not a rare fallback. It is a materially weaker
+   substitute — an unstructured read-through, not the real multi-angle,
+   verified methodology — so it does not satisfy this gate on its own.
 2. Triage the findings:
    - **Confirmed correctness bugs** — fix now. When the fix touches Angular or
      Spring Boot production code, go through `tdd` (failing test first); re-run
@@ -162,9 +165,15 @@ run by you:
      user; never silently expand scope beyond the Phase 3 alignment.
    - **False positives / out-of-scope findings** — skip, with a one-line note.
 3. Summarize the outcome in a few lines: fixed, surfaced, skipped.
+4. Tell the user plainly that only the manual correctness pass ran (not the real
+   `/code-review` methodology — the agent cannot trigger slash commands itself),
+   and recommend they run `/code-review high` (or `xhigh`/`max` for a
+   higher-stakes change) themselves before opening the PR for peer review. Do not
+   imply the manual pass was equivalent.
 
 This gate is cheap insurance before the coworker review — it does not replace
-the team's PR review.
+the team's PR review, and on its own (without the user separately running
+`/code-review`) it is weaker than a real review pass.
 
 ### Phase 7: DOCS
 
