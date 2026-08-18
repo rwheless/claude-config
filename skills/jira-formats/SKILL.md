@@ -29,6 +29,7 @@ by `pickup-issue` and `update-docs`.
 - All description field content **MUST** use valid Jira Wiki Markup syntax — not Markdown.
 - `*text*` (single asterisks) for bold: UI elements, menu items, routes, endpoint paths.
 - `{{text}}` (double curly braces) for monospace/inline code: code identifiers, DB objects, naming conventions.
+- A bare single-word `{{word}}` span can silently render as "Unknown macro: {word}" instead of monospace text if an installed Jira/Confluence app happens to register a macro with that exact shortname (observed with `{{loadMore}}`). If a short identifier renders broken, disambiguate by including non-alphanumeric context inside the braces rather than the bare word alone - e.g. `{{(loadMore)}}` for an Angular output, `{{loadMore()}}` for a method call, `{{loadMore: string}}` for a field - anything that can't exactly match a macro shortname.
 - Naming conventions may use `{placeholder}` syntax inside `{{}}` to mark variable parts (e.g., `{{findBy{PropertyName}()}}`), but avoid this when the placeholder contains `.` (Spring property paths) or any other `{...}` that Jira would parse as a macro — it will break the span.
 - `-text-` (hyphens) for strikethrough: descoped requirements — keep visible rather than deleting.
 - Cross-reference other issues by key when known, otherwise by planning-file slug.
