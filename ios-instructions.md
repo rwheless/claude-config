@@ -46,6 +46,9 @@ Base URL: https://raw.githubusercontent.com/rwheless/claude-config/main/skills
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/grill-with-docs/EXPLORATION.md
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/grill-with-docs/STACK-WORK.md
 
+**handoff**
+- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/handoff/SKILL.md
+
 **improve-codebase-architecture**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/improve-codebase-architecture/SKILL.md
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/improve-codebase-architecture/DEEPENING.md
