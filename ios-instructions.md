@@ -29,9 +29,6 @@ Base URL: https://raw.githubusercontent.com/rwheless/claude-config/main/skills
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/docs-formats/SKILL.md
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/docs-formats/ADR-FORMAT.md
 
-**docs-formats-personal**
-- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/docs-formats-personal/SKILL.md
-
 **flesh-out**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/flesh-out/SKILL.md
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/flesh-out/BRIEF-FORMAT.md
@@ -56,9 +53,6 @@ Base URL: https://raw.githubusercontent.com/rwheless/claude-config/main/skills
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/improve-codebase-architecture/INTERFACE-DESIGN.md
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/improve-codebase-architecture/LANGUAGE.md
 
-**improve-codebase-architecture-personal**
-- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/improve-codebase-architecture-personal/SKILL.md
-
 **jira-formats**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/jira-formats/SKILL.md
 
@@ -71,9 +65,6 @@ Base URL: https://raw.githubusercontent.com/rwheless/claude-config/main/skills
 **pickup-issue**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/pickup-issue/SKILL.md
 
-**pickup-issue-personal**
-- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/pickup-issue-personal/SKILL.md
-
 **plan-to-github**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/plan-to-github/SKILL.md
 
@@ -83,9 +74,6 @@ Base URL: https://raw.githubusercontent.com/rwheless/claude-config/main/skills
 **plan-with-me**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/plan-with-me/SKILL.md
 
-**plan-with-me-personal**
-- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/plan-with-me-personal/SKILL.md
-
 **review-pr**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/review-pr/SKILL.md
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/review-pr/REVIEW-EXPECTATIONS.md
@@ -93,9 +81,6 @@ Base URL: https://raw.githubusercontent.com/rwheless/claude-config/main/skills
 
 **skill-retro**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/skill-retro/SKILL.md
-
-**sweep-issues-personal**
-- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/sweep-issues-personal/SKILL.md
 
 **tdd**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/tdd/SKILL.md
@@ -107,9 +92,6 @@ Base URL: https://raw.githubusercontent.com/rwheless/claude-config/main/skills
 
 **update-docs**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/update-docs/SKILL.md
-
-**update-docs-personal**
-- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/update-docs-personal/SKILL.md
 
 **update-ios-instructions**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/update-ios-instructions/SKILL.md
