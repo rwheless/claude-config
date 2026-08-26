@@ -38,6 +38,15 @@ merging checklist, approval mechanics) is intentionally omitted.
 - **Tests** — **Missing tests are a blocker.** Tests must be meaningful and
   purposeful. Rare exceptions where no test is relevant: client styling or
   configuration.
+  - A test that exists is not the same as a test that discriminates. If two or
+    more asserted values in the same test could be swapped, sourced from the
+    wrong field, or are coincidentally equal, and the test would still pass,
+    treat it as unproven coverage. Check that fixture values are unique across
+    whatever the assertions are meant to tell apart.
+  - When a test's own setup (a wrapping `@Transactional`, a mock, an open
+    session) differs from how the code actually runs in production, check
+    whether that difference would hide the exact regression the test is
+    supposed to catch.
 
 ## Blocking issues
 

@@ -98,6 +98,10 @@ Review through these lenses (the team's "Review Focus" vocabulary):
 Read `REVIEW-EXPECTATIONS.md` in this skill directory for the lens essences and
 the blocking/non-blocking definitions.
 
+**AC-to-test reconciliation.** For each acceptance criterion, find the specific
+test that would fail if that criterion broke. An AC with no test you can name
+for it is unproven coverage, even if the surrounding area looks well-tested.
+
 **Code-smell calibration.** Prefer established patterns — but a deviation is not
 automatically a finding. The question is whether the new pattern solves the
 problem demonstrably better. Simplicity cuts both ways: over-engineering and
