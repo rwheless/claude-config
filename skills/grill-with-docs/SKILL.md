@@ -49,6 +49,12 @@ Don't try to grill an oversized scope to completion in one sitting.
 6. **Re-ground periodically.** After every 10th question, and after returning from
    any exploration detour, re-read the Core rules section of this file before
    asking the next question. Long sessions decay discipline; this restores it.
+7. **Flag scope expansion in your own recommendations.** If your recommended answer
+   introduces something the user didn't ask for (a new status code, a new
+   dependency, new client-side infrastructure, a new pattern not already in the
+   codebase), say so explicitly and name the literal minimal-scope alternative
+   alongside it. "More correct" and "more work" are different axes — let the user
+   see the cheap option, don't make them notice its absence and ask for it back.
 
 ## Stack guidance
 
