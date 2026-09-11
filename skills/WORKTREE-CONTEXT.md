@@ -22,6 +22,7 @@ session is running in.
 - `.claude/context/CONTEXT-MAP.md`
 - `.claude/context/ORIENTATION.md`
 - `.claude/jira-planning/` (the whole directory)
+- `.claude/research/` (the whole directory, written by `research-this`)
 
 **Out of scope** (never redirect, even though also gitignored):
 - `.claude/wrap-up/IMPLEMENTATION-HANDOFF.md` — intentionally scoped to the

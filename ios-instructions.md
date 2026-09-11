@@ -61,6 +61,10 @@ Base URL: https://raw.githubusercontent.com/rwheless/claude-config/main/skills
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/learn/LESSON-FORMAT.md
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/learn/NOTES-FORMAT.md
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/learn/SYLLABUS-FORMAT.md
+- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/learn/WIDGETS.md
+
+**my-voice**
+- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/my-voice/SKILL.md
 
 **pickup-issue**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/pickup-issue/SKILL.md
@@ -73,6 +77,10 @@ Base URL: https://raw.githubusercontent.com/rwheless/claude-config/main/skills
 
 **plan-with-me**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/plan-with-me/SKILL.md
+
+**research-this**
+- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/research-this/SKILL.md
+- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/research-this/RESEARCH-FORMAT.md
 
 **review-pr**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/review-pr/SKILL.md
