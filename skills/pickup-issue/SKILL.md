@@ -158,9 +158,13 @@ run by you:
    substitute — an unstructured read-through, not the real multi-angle,
    verified methodology — so it does not satisfy this gate on its own.
 2. Triage the findings:
-   - **Confirmed correctness bugs** — fix now. When the fix touches Angular or
-     Spring Boot production code, go through `tdd` (failing test first); re-run
-     the tests after.
+   - **Confirmed correctness bugs** — before fixing, grep the class's test file
+     for any existing test that might already enforce the behavior the finding
+     wants changed (e.g. a reflection-based policy test like
+     `everyPublicMethod_isTransactional`). A finding being "confirmed" does not
+     mean it's safe to apply until it's checked against the code's own test
+     suite. Then fix. When the fix touches Angular or Spring Boot production
+     code, go through `tdd` (failing test first); re-run the tests after.
    - **Judgment calls** (design trade-offs, scope questions) — surface to the
      user; never silently expand scope beyond the Phase 3 alignment.
    - **False positives / out-of-scope findings** — skip, with a one-line note.
