@@ -104,6 +104,9 @@ Base URL: https://raw.githubusercontent.com/rwheless/claude-config/main/skills
 **update-ios-instructions**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/update-ios-instructions/SKILL.md
 
+**vet-review-findings**
+- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/vet-review-findings/SKILL.md
+
 **wrap-up**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/wrap-up/SKILL.md
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/wrap-up/IMPLEMENTATION.md
