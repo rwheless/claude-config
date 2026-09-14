@@ -1,0 +1,19 @@
+{
+  "skill_name": "vet-review-findings",
+  "evals": [
+    {
+      "id": 0,
+      "name": "user-access-controller-unreachable-guard",
+      "prompt": "I just ran /code-review high on my branch in the duebotv3 repo (course-load-service module) and got this finding I'm about to apply:\n\nFinding: In course-load-service/src/main/java/edu/liberty/lms/duebot/user/UserAccessController.java, getUserAccess() builds an error message with `principal.getClass()` at line 27 when the principal isn't a HierarchyUserDetails. If principal itself were null, that call would throw an NPE instead of the intended IllegalStateException. Recommended fix: add a null check on principal before calling getClass() in the error message.\n\nBefore I apply this, can you check whether this finding is actually right to apply as-is? The repo is at /home/rwheless/GitRepos/duebotv3.",
+      "expected_output": "Should trace reachability through SecurityConfig.java (/api/** requires .authenticated(), so unauthenticated requests never reach the controller) and HierarchyEnrichmentFilter.java (any authenticated request either gets 403'd for zero roles, or has its principal replaced with a HierarchyUserDetails before the filter chain continues) to conclude that both the null-authentication check and the instanceof check in UserAccessController are unreachable dead code. Correct answer overrides the original finding: recommend deleting the guard entirely (not patching the NPE), citing file:line evidence from SecurityConfig and HierarchyEnrichmentFilter.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "course-length-service-reachable-guard",
+      "prompt": "I just ran /code-review high on my branch in the duebotv3 repo (course-load-service module) and got this finding I'm about to apply:\n\nFinding: In course-load-service/src/main/java/edu/liberty/lms/duebot/util/CourseLengthService.java, requireTermId() and requireCourseCode() throw exceptions when termId or canvasCourseCode are null/empty. This looks like unnecessary defensive validation - callers presumably always pass valid, non-null data. Recommended fix: remove both guard methods and their calls to simplify determineLengthInWeeks().\n\nBefore I apply this, can you check whether this finding is actually right to apply as-is? The repo is at /home/rwheless/GitRepos/duebotv3. The caller is CourseOfferingService.java.",
+      "expected_output": "Should trace where canvasCourseCode and termId actually originate (CourseOfferingService, ultimately from Canvas/warehouse data - an external data source, not something guaranteed non-null/non-empty by any upstream type system or security layer). Correct answer leaves the original finding's recommendation rejected: keep both guards, since they validate at a genuine external-data boundary. Should not recommend deleting them just because they superficially resemble the pattern in the other guard-related finding.",
+      "files": []
+    }
+  ]
+}
