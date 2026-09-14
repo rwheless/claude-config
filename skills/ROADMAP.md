@@ -30,3 +30,17 @@ grill-with-docs session. Written 2026-07-02 during the Sonnet-readiness audit.
   Surfaced 2026-07-10 during an ad hoc `plan-with-me-personal` wrap-up on
   astrowatch (cleanup batch), which had to invent this shape from scratch.
 
+- **Fork Anthropic's `/code-review` plugin into a claude-config-owned skill.**
+  `/code-review` (`~/.claude/plugins/marketplaces/claude-plugins-official`) is
+  not ours to edit - it's unversioned locally and gets silently overwritten on
+  marketplace sync. Its multi-agent finder+verifier methodology is genuinely
+  solid (caught a real NPE on LDB-1333), but it has no concept of the
+  reachability check `vet-review-findings` now bolts on afterward as a
+  separate pass. A full fork would replicate the 8-angle parallel-agent
+  methodology directly in claude-config and build the reachability check into
+  the finder agents themselves, so unreachable-guard findings never get
+  reported as "patch this" in the first place - no separate pass required,
+  and no dependency on a plugin we can't maintain. Deferred 2026-09-11 during
+  the vet-review-findings build (LDB-1333 "slop" retro); the user explicitly
+  wants both the lightweight gate (done) and this fuller fork (this entry).
+
