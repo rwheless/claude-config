@@ -55,11 +55,20 @@ Before presenting anything to the user:
    per `WORKTREE-CONTEXT.md` before this lookup):
    a. Look up the Jira slug from the PR title in `.claude/jira-planning/issues.csv`;
       if found, read the referenced planning file for the ACs.
-   b. Otherwise, ask the user to paste the Jira issue description and ACs. The
-      PR description is never a substitute AC source — it documents what the
-      author changed, not what was required. Always read it too (step 1
-      already does), but only as context alongside whatever the user pastes,
-      never instead of asking.
+   b. Otherwise, ask the user to paste three things **by name**: the Jira
+      issue Description, the Acceptance Criteria, and the Technical
+      Acceptance Criteria. These are distinct Jira fields, not synonyms — AC
+      is the functional/behavioral spec ("Should do X"), TAC is the
+      implementation-level spec aimed at the developer/reviewer (specific
+      files, classes, required test cases). Getting one does not mean you
+      have the other. After the user pastes something, check what actually
+      arrived against all three names before treating this step as done, and
+      ask again by name for whichever one is still missing — do not assume a
+      Description-plus-TAC paste also covers AC, or vice versa. The PR
+      description is never a substitute for any of the three — it documents
+      what the author changed, not what was required. Always read it too
+      (step 1 already does), but only as context alongside what the user
+      pastes, never instead of asking.
 5. Read `.claude/context/CONTEXT.md` and `docs/adr/` (or legacy
    `.claude/context/adr/`) if they exist (same resolved root as step 4).
 
