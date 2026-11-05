@@ -157,6 +157,10 @@ one-question-at-a-time interview:
 | # | File / Line | Finding | Disposition | Reasoning |
 |---|-------------|---------|-------------|-----------|
 
+**One short sentence per cell.** The `Finding` and `Reasoning` cells get one
+sentence each. If a cell wraps to a second line in a terminal, it is too long —
+cut it, don't reformat it.
+
 Dispositions:
 
 | Disposition | When to use |
@@ -194,8 +198,25 @@ Structure:
   and name a file that demonstrates the pattern to copy.
 - **mid** — terse, intent-level. Flag the risk rather than prescribe the fix.
 
+**Length budget (hard limit).** A finding's comment is **three sentences
+maximum** — what's wrong, where, and the fix. Non-blocking comments get **one
+or two**. If a code snippet is needed, the snippet replaces the explanation
+instead of adding to it.
+
+This limit outranks every other instruction about comment structure, including
+any saved preference for walking through a failure step by step. Write the
+short version. Keep the longer reasoning ready and give it only if the user
+asks why.
+
 ## General conduct
 
+- **Plain language, in the file and in chat.** Triage tables, findings, and your
+  own replies while discussing them all use short declarative sentences. No
+  metaphors for code behaviour ("mocked at the seam", "living rent-free"). No
+  shorthand borrowed from `REVIEW-EXPECTATIONS.md` used as if it were plain
+  English ("unproven coverage", "discriminating test") — say what it means
+  instead: "the test swaps in a fake service, so it never runs the real mapping
+  code." No em-dash asides that bury the point, and no emoji.
 - Never produce findings before the AC gate clears. If step 4b applied, the
   acceptance criteria must be in hand — or the user must have said there are
   none — before you read the diff.
