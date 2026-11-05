@@ -18,6 +18,10 @@ Base URL: https://raw.githubusercontent.com/rwheless/claude-config/main/skills
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/build-style-guide/ELEMENTS.md
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/build-style-guide/STACK-ANGULAR.md
 
+**caveman**
+- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/caveman/SKILL.md
+- https://raw.githubusercontent.com/rwheless/claude-config/main/skills/caveman/README.md
+
 **debug-problems**
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/debug-problems/SKILL.md
 - https://raw.githubusercontent.com/rwheless/claude-config/main/skills/debug-problems/STACK-WORK.md
