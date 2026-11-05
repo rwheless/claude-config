@@ -10,21 +10,49 @@ You are picking up a Jira issue for implementation. Input is everything after
 the first whitespace-delimited uppercase token (e.g. `LNES-129`); treat the rest as
 the issue summary and description.
 
+## Issue-text gate
+
 If what follows the slug reads like a short title or paraphrase rather than the
 full issue (no acceptance criteria, no detail beyond a sentence), ask the user to
-paste the actual Jira issue description before exploring or grilling — a short
-paraphrase can omit scope-defining details (e.g. which specific components/entities
-are named) that would otherwise only surface after significant grilling has already
-happened.
+paste three things **by name**: the Jira issue Description, the Acceptance
+Criteria, and the Technical Acceptance Criteria. These are distinct Jira fields,
+not synonyms — AC is the functional/behavioral spec ("Should do X"), TAC is the
+implementation-level spec aimed at the developer (specific files, classes,
+required test cases). Getting one does not mean you have the other. After the
+user pastes something, check what actually arrived against all three names
+before treating this gate as cleared, and ask again by name for whichever one is
+still missing.
+
+**Then STOP and end your turn.** Asking is not enough — you must wait for the
+answer. Do not explore the codebase, do not dispatch an Explore agent, do not
+read `issues.csv`, do not build an internal picture of what will change, and do
+not start generating grilling questions while the ask is outstanding. A short
+paraphrase can omit scope-defining details (e.g. which specific
+components/entities are named) that would otherwise only surface after
+significant grilling has already happened — and an implementation built on
+inferred scope cannot be verified against the real AC/TAC afterward, because
+they were never seen. The user will either paste the fields or say explicitly
+that the issue has none — only then does Phase 1 begin. Saving a round trip is
+never a reason to cross this gate.
+
+This gate is conditional: if the user already supplied the full issue text up
+front, it is already cleared and Phase 1 starts immediately. Judge that on the
+detail actually present, not on length alone.
 
 ## Workflow
 
-Run these phases strictly in order. Do not create a worktree or write any code until
-Phase 3 alignment is explicitly confirmed by the user.
+Run these phases strictly in order. There are two hard gates, and both block on
+the user, not on you:
+
+- **Issue-text gate** (before Phase 1) — when the input is a short paraphrase, do
+  not start Phase 1 until the user has supplied the Description/AC/TAC or said the
+  issue has none. See the issue-text gate above.
+- **Alignment gate** (Phase 3) — do not create a worktree or write any code until
+  the user explicitly confirms the shared understanding.
 
 ```
-1. ORIENT  →  2. GRILL  →  3. CONFIRM ALIGNMENT  →  4. WORKTREE  →  5. IMPLEMENT
-  →  6. SELF-REVIEW  →  7. DOCS
+[issue-text gate]  →  1. ORIENT  →  2. GRILL  →  3. CONFIRM ALIGNMENT
+  →  [alignment gate]  →  4. WORKTREE  →  5. IMPLEMENT  →  6. SELF-REVIEW  →  7. DOCS
 ```
 
 ### Phase 1: ORIENT
@@ -39,7 +67,10 @@ handoff, verify it against `git log`/`git status`, skip re-grilling what it reco
 as aligned (address "Not yet aligned" items first), reuse the worktree in Phase 4,
 land in the phase it names, and delete the handoff once caught up.
 
-Otherwise, before asking the user anything, gather context:
+Otherwise, before asking the user any *grilling* questions, gather context. (This
+is not licence to skip the issue-text gate above — "before asking the user
+anything" means Phase 2's questions, not the Description/AC/TAC ask, which
+precedes everything here.)
 
 1. Read `.claude/context/CONTEXT.md` and `docs/adr/` (plus any legacy
    `.claude/context/adr/`) if they exist. In a work repo, resolve the
@@ -202,6 +233,9 @@ After implementation:
 
 ## General conduct
 
+- Never explore the codebase or start grilling before the issue-text gate clears.
+  If the input was a short paraphrase, the Description/AC/TAC must be in hand — or
+  the user must have said the issue has none — before Phase 1 step 1.
 - Never start Phase 4 without explicit alignment confirmation from Phase 3.
 - The branch name is always the exact Jira slug — no modification, no lowercasing.
 - If the issue scope is large enough to span multiple PRs, say so in Phase 3 and

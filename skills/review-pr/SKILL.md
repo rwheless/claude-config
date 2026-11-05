@@ -22,11 +22,16 @@ default to `junior` voice.
 
 ## Workflow
 
-Run these phases strictly in order. Write nothing to disk until Phase 3
-alignment is explicitly confirmed by the user.
+Run these phases strictly in order. There are two hard gates, and both block on
+the user, not on you:
+
+- **AC gate** (end of Phase 1) — do not start Phase 2 until the user has supplied
+  the acceptance criteria or said there are none. See step 4.
+- **Alignment gate** (Phase 3) — write nothing to disk until the user explicitly
+  confirms the triage table.
 
 ```
-1. ORIENT  →  2. REVIEW  →  3. TRIAGE (gate)  →  4. WRITE
+1. ORIENT  →  [AC gate]  →  2. REVIEW  →  3. TRIAGE  →  [alignment gate]  →  4. WRITE
 ```
 
 ### Phase 1: ORIENT
@@ -69,6 +74,18 @@ Before presenting anything to the user:
       what the author changed, not what was required. Always read it too
       (step 1 already does), but only as context alongside what the user
       pastes, never instead of asking.
+
+      **Then STOP and end your turn.** Asking is not enough — you must wait for
+      the answer. Do not read the diff, do not form findings, do not draft a
+      triage table, and do not present findings "pending the AC" while the ask
+      is outstanding. The acceptance criteria determine *what you go looking
+      for*; reviewing first anchors the whole pass to what the author did
+      instead of what was required, and the TAC in particular routinely names
+      specific files and required test cases that reframe a finding's
+      disposition. Producing findings early also biases the user's culling
+      before they have seen the spec. The user will either paste the fields or
+      say explicitly that none exist — only then does Phase 2 begin. Saving a
+      round trip is never a reason to cross this gate.
 5. Read `.claude/context/CONTEXT.md` and `docs/adr/` (or legacy
    `.claude/context/adr/`) if they exist (same resolved root as step 4).
 
@@ -76,6 +93,9 @@ Output a brief orientation summary (3–5 lines: PR title, author, branch,
 existing-feedback count, and **which AC source you are reviewing against**).
 Naming the AC source lets the user catch a stale planning file. Do not dump
 file listings or raw comment text.
+
+When step 4b applied, that orientation summary plus the ask **is the entire
+turn**. Nothing else goes in the message.
 
 ### Phase 2: REVIEW
 
@@ -176,6 +196,9 @@ Structure:
 
 ## General conduct
 
+- Never produce findings before the AC gate clears. If step 4b applied, the
+  acceptance criteria must be in hand — or the user must have said there are
+  none — before you read the diff.
 - Never write to disk before Phase 3 alignment is explicitly confirmed.
 - The user posts every comment and task to Bitbucket manually. This skill never
   posts, resolves, or approves anything.
